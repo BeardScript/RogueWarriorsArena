@@ -109,22 +109,6 @@ export default class Animator extends RE.Component {
     activeConfig.playOnce = value;
   }
 
-  // @RE.props.num()
-  // get maxWeight() {
-  //   const activeConfig = this.data[this.selected];
-
-  //   return activeConfig ? activeConfig.maxWeight : 1;
-  // }
-
-  // set maxWeight(value: number) {
-  //   if (this.selected < 0) return;
-  //   const activeConfig = this.data[this.selected];
-
-  //   if (!activeConfig) return;
-
-  //   activeConfig.maxWeight = value;
-  // }
-
   @RE.props.num()
   get duration() {
     const activeConfig = this.data[this.selected];
