@@ -67,12 +67,21 @@ export default class Animator extends RE.Component {
 
   set selected(value: number) {
     this._selected = value;
-    this.data = this.data;
+    this.updateAnimationConfigInputs();
     // this.activeAction && this.activeAction.reset();
     this.animationsHaveChanged() && this.updateConfigs();
     if (this.playLabel === "Stop" && !RE.Runtime.isRunning) {
       this.playAction();
     }
+  }
+
+  private updateAnimationConfigInputs() {
+    this.data = this.data;
+    const activeConfig = this.data[this._selected];
+    this.actionName = activeConfig.actionName;
+    this.playOnce = activeConfig.playOnce;
+    this.duration = activeConfig.duration;
+    this.speed = activeConfig.speed;
   }
 
   selectedOptions: string[] = this.animations.map((elem, i) => i.toString() );

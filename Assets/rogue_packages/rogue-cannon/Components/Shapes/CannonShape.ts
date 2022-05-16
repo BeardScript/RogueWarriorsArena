@@ -10,6 +10,7 @@ export default class CannonShape extends RE.Component {
 
   localPos: THREE.Vector3 = new THREE.Vector3();
   worldPos = new THREE.Vector3();
+  oldPos = new THREE.Vector3();
 
   localRot = new THREE.Quaternion();
   worldQuaternion = new THREE.Quaternion();
@@ -87,12 +88,17 @@ export default class CannonShape extends RE.Component {
   update() {
     if (!this.shape) return;
     if (!this.shape.body) return;
+    if (this.shape.body.type === CANNON.BODY_TYPES.STATIC || this.shape.body.mass === 0) return
 
     const shapeIndex = this.shape.body?.shapes.indexOf(this.shape);
     
     if (shapeIndex === undefined) return;
 
+    this.oldPos.copy(this.worldPos);
     this.object3d.getWorldPosition(this.worldPos);
+
+    if (this.oldPos.equals(this.worldPos)) return;
+
     this.localPos.copy(this.worldPos);
     this.bodyComponent?.object3d.updateWorldMatrix(true, true);
     this.bodyComponent?.object3d.worldToLocal(this.localPos);

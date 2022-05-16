@@ -117,13 +117,15 @@ export default class CannonBodyWireframe extends RE.Component {
     }
 
     if (component instanceof CannonCylinder) {
-      const radiusTop = component.radiusTopOffset * component.object3d.scale.x;
-      const radiusBottom = component.radiusBottomOffset * component.object3d.scale.x;
-      const height = component.heightOffset * component.object3d.scale.y;
-      return new THREE.Mesh(
+      const radiusTop = component.radiusTopOffset;
+      const radiusBottom = component.radiusBottomOffset;
+      const height = component.heightOffset;
+      const mesh = new THREE.Mesh(
         new THREE.CylinderBufferGeometry(radiusTop, radiusBottom, height, component.segments),
         this.wireframeMaterial,
       );
+
+      return mesh;
     }
 
     if (component instanceof CannonSphere) {
@@ -181,11 +183,9 @@ export default class CannonBodyWireframe extends RE.Component {
     }
 
     if (component instanceof CannonCylinder) {
-      component.object3d.getWorldScale(mesh.scale);
-
-      const radiusTop = component.radiusTopOffset * mesh.scale.x
-      const radiusBottom = component.radiusBottomOffset * mesh.scale.x;
-      const height = component.heightOffset * mesh.scale.y;
+      const radiusTop = component.radiusTopOffset;
+      const radiusBottom = component.radiusBottomOffset;
+      const height = component.heightOffset;
 
       if (mesh.geometry instanceof THREE.CylinderBufferGeometry) {
         if (
@@ -198,6 +198,7 @@ export default class CannonBodyWireframe extends RE.Component {
           mesh.geometry = new THREE.CylinderBufferGeometry(radiusTop, radiusBottom, height, component.segments);
         }
       }
+      component.object3d.getWorldScale(mesh.scale);
     }
 
     if (component instanceof CannonSphere) {
@@ -222,6 +223,7 @@ export default class CannonBodyWireframe extends RE.Component {
 
     component.object3d.getWorldPosition(mesh.position);
     component.object3d.getWorldQuaternion(mesh.quaternion);
+    // component.object3d.getWorldScale(mesh.scale);
   }
 
   onBeforeRemoved() {

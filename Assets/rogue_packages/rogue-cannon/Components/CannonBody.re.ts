@@ -146,7 +146,7 @@ export default class CannonBody extends RE.Component {
     RogueCannon.getWorld().removeBody(this.body);
   }
 
-  update() {
+  beforeUpdate() {
     if (this.body.mass !== this._mass) {
       this.mass = this._mass;
     }
@@ -154,9 +154,7 @@ export default class CannonBody extends RE.Component {
     this.body && (this.body.type = this.getBodyType())
 
     this.body.type !== CANNON.BODY_TYPES.STATIC && this.updatePhysics();
-  }
 
-  afterUpdate() {
     if (this.triggerCollision !== undefined && this.onCollideCB) {
       this.onCollideCB(this.triggerCollision);
       this.triggerCollision = undefined;

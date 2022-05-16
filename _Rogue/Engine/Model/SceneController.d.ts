@@ -55,7 +55,10 @@ export default abstract class SceneController extends Lifecycle {
     protected beforeUpdate(): void;
     protected update(): void;
     protected afterUpdate(): void;
-    protected startRenderer(renderer?: WebGLRenderer): void;
+    startRenderer(renderer?: WebGLRenderer): void;
+    protected doOnResize: (entries: any) => void;
+    onResize: () => void;
+    resizeObserver: any;
     setSceneDimensions(width: number, height: number): void;
     private setCameraDimensions;
     protected adjustCameraAndRenderer(force?: boolean): void;
